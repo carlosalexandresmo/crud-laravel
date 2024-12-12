@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Services\CepService;
 use Illuminate\Support\ServiceProvider;
 
 class ViaCepServiceProvider extends ServiceProvider
@@ -11,7 +12,7 @@ class ViaCepServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(CepService::class, fn() => new CepService());
     }
 
     /**

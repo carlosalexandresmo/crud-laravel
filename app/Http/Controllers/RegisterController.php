@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Http\Services\CepService;
 use App\Http\Services\UserService;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Response;
 
 class RegisterController extends Controller
@@ -36,24 +33,13 @@ class RegisterController extends Controller
         }
     }
 
-    public function cep($cep)
+    public function cep(string $cep, CepService $cepService)
     {
-        $url = "https://viacep.com.br/ws/" .  $cep . "/json/";
-
-        $client = new Client([
-            'timeout' => 60,
-            'connect_timeout' => 60,
-        ]);
-
         try {
-            $response = $client->get(
-                $url,
-            );
-
-            $result = json_decode($response->getBody()->getContents());
+            $result = $cepService->search($cep);
             return response()->json($result, Response::HTTP_OK);
-        } catch (RequestException | GuzzleException | ClientException $exception) {
-            return response()->json($exception, Response::HTTP_BAD_REQUEST);
+        } catch (\Exception $exception) {
+            return response()->json(['error' => $exception->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
 }
