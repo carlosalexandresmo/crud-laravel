@@ -19,7 +19,6 @@ class ForgotPasswordController extends Controller
             $data = $request->validated();
 
         } catch (\Exception $exception) {
-            //     Log::error($exception);
             return response()->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }

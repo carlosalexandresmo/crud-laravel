@@ -34,7 +34,6 @@ class AuthController extends Controller
             }
 
         } catch (\Exception $e) {
-            // Log::error($e, $request->all());
             return response()->json(['error' => $e->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }
@@ -46,7 +45,6 @@ class AuthController extends Controller
             return response()->json(['logout' => 'Logout realizado com sucesso!'], Response::HTTP_OK);
 
         } catch (\Exception $exception) {
-            // Log::error($exception);
             return response()->json(['error' => $exception->getMessage()], 400);
         }
     }
