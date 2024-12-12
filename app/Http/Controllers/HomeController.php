@@ -19,7 +19,6 @@ class HomeController extends Controller
         try {
             return response()->json(['users' => UsersResource::collection(User::all())], Response::HTTP_OK);
         } catch (\Exception $exception) {
-            //     Log::error($exception);
             return response()->json(['error' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
         }
     }
