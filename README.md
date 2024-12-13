@@ -80,13 +80,13 @@ POST /api/register
 ```sh
 {
 	"name":"Nome",
-	"email":"email@gmail.com",
-	"password":"12345678",
-	"confirmed_password": "12345678",
+	"email":"user@email.com",
+	"password":"password",
+	"confirmed_password": "password",
 	"street":"Rua",
-	"district":"",
-	"street_number":"",
-	"city":"",
+	"district":"Bairro",
+	"street_number":"999",
+	"city":"Cidade",
 	"state":"SP",
 	"zip_code":"10000000"
 }
@@ -100,8 +100,8 @@ POST /api/login
 
 ```sh
 {
-	"email":"carlos.alexandre.smo@gmail.com",
-	"password":"12345678"
+	"email":"user@email.com",
+	"password":"password"
 }
 ```
 
@@ -113,8 +113,8 @@ GET /api/users
 
 ```sh
 {
-	"email":"carlos.alexandre.smo@gmail.com",
-	"password":"12345678"
+	"email":"user@email.com",
+	"password":"password"
 }
 ```
 
@@ -124,16 +124,8 @@ GET /api/users
 GET /api/cep/{cep}
 ```
 
-```sh
-
-```
-
 #### Rota de deslogar
 
 ```sh
 POST /api/logout
-```
-
-```sh
-
 ```
