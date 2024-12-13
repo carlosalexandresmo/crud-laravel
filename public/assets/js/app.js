@@ -49,7 +49,7 @@ $(function () {
                 var token = data.token;
                 localStorage.setItem("token", token);
                 setTimeout(() => {
-                    window.location.href = "/home";
+                    window.location.href = "/";
                 }, 1000);
             },
             error: function (request, status, error) {
