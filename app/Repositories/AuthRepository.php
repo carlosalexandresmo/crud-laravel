@@ -19,6 +19,7 @@ class AuthRepository implements AuthRepositoryInterface
 
     public function logout($request): void
     {
+        Auth::logout();
         $request->user()->tokens()->delete();
     }
 

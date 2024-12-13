@@ -4,12 +4,14 @@ namespace App\Repositories;
 
 use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements UserRepositoryInterface
 {
     public function create(array $data): array
     {
         $user = User::create($data)->toArray();
+        Auth::login($user);
         return $user;
     }
 

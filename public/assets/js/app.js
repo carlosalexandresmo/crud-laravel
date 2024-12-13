@@ -1,10 +1,9 @@
 $(document).ready(function () {
-    console.log("running");
-
     if ($("#users").length > 0) {
         const token = localStorage.getItem("token");
+
         $.ajax({
-            async: false,
+            async: true,
             type: "GET",
             url: "/api/users",
             headers: {
@@ -14,12 +13,15 @@ $(document).ready(function () {
             success: function (data) {
                 var users = data.users;
                 console.log(users);
-                var html = '';
-                users.forEach(user => {
-                    html += `<div class="d-flex flex-row m-2"><div class="col-3">${user.name}</div><div class="col-3">${user.email}</div><div class="col-6">Logradouro: ${user.street}, ${user.district} - ${user.city} - ${user.state}</div></div>`
+                var html = "";
+                users.forEach((user) => {
+                    html += `<div class="d-flex flex-row m-2"><div class="col-3">${user.name}</div><div class="col-3">${user.email}</div><div class="col-6">Logradouro: ${user.street}, ${user.district} - ${user.city} - ${user.state}</div></div>`;
                 });
 
-                $('#users').html(html);
+                $("#users").html(html);
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
             },
         });
     }
@@ -34,14 +36,21 @@ $(function () {
         password = $form.find("input[name='password']").val();
 
         $.ajax({
+            async: true,
             url: "api/login",
             type: "POST",
+            accepts: {
+                text: "application/json",
+            },
             dataType: "json",
             data: { email: email, password: password },
             success: function (data) {
                 console.log(data);
                 var token = data.token;
                 localStorage.setItem("token", token);
+                setTimeout(() => {
+                    window.location.href = "/home";
+                }, 1000);
             },
             error: function (request, status, error) {
                 alert(request.responseText);
@@ -86,6 +95,9 @@ $(function () {
             },
             success: function (data) {
                 console.log(data);
+                setTimeout(() => {
+                    window.location.href = "/login";
+                }, 1000);
             },
             error: function (request, status, error) {
                 alert(request.responseText);
@@ -101,8 +113,12 @@ $(document).ready(function () {
             .replace(/[^0-9]/, "");
         if (cep) {
             $.ajax({
+                async: true,
                 url: "api/cep/" + cep,
                 type: "GET",
+                accepts: {
+                    text: "application/json",
+                },
                 dataType: "json",
                 success: function (data) {
                     $("input[name=street]").val(data.logradouro);
@@ -114,45 +130,6 @@ $(document).ready(function () {
                     alert(request.responseText);
                 },
             });
-
-            // $.ajax({
-            //         url: url,
-            //         dataType: 'jsonp',
-            //         crossDomain: true,
-            //         contentType: "application/json",
-            //         success : function(json){
-            //             if(json.logradouro){
-            //                 $("input[name=rua]").val(json.logradouro);
-            //                 $("input[name=bairro]").val(json.bairro);
-            //                 $("input[name=cidade]").val(json.localidade);
-            //                 $("input[name=uf]").val(json.estado);
-            //             }
-            //         }
-            // });
         }
     });
 });
-
-// $(function () {
-//     $("#formRegister").submit(function (e) {
-//         e.preventDefault();
-
-//         var $form = $(this),
-//         cep = $form.find("input[name='cep']").val();
-
-//         $.ajax({
-//             url: "api/cep/{}",
-//             type: "GET",
-//             dataType: "json",
-//             data: {
-//                 cep: cep,
-//             },
-//             success: function (data) {
-//                 console.log(data);
-//             },
-//             error: function (request, status, error) {
-//                 alert(request.responseText);
-//             },
-//         });
-//     });
-// });

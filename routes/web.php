@@ -6,7 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth:sanctum');
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::get('/cadastro', [RegisterController::class, 'index'])->name('register');
 Route::get('recuperar-senha', [ForgotPasswordController::class, 'index'])->name('forgotPassword');
